@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Beautiful Site</title>
+  <style>
+    :root {
+      --primary: #007acc;
+      --bg: #f4f4f4;
+      --text: #333;
+      --font: 'Segoe UI', sans-serif;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: var(--font);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 2rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--primary);
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #555;
+    }
+    section {
+      max-width: 800px;
+      margin: auto;
+    }
+    .card {
+      background: white;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to My Beautiful Site</h1>
+    <p>Your name | Your passion | Your journey</p>
+  </header>
+
+  <section>
+    <div class="card">
+      <h2>👋 About Me</h2>
+      <p>
+        I'm a passionate creator, coder, and explorer. I love building things that solve real problems, especially with data, design, and technology.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>💼 Projects</h2>
+      <ul>
+        <li><strong>Project A:</strong> <a href="#">Description and link</a></li>
+        <li><strong>Project B:</strong> <a href="#">Description and link</a></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>📫 Contact</h2>
+      <p>Let's connect on <a href="https://github.com/yourusername" target="_blank">GitHub</a>, or send me an email at you@example.com.</p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Your Name. All rights reserved.
+  </footer>
+</body>
+</html>
 
