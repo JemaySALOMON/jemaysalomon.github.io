@@ -14,7 +14,7 @@
       --text: #c9d1d9;           /* Light gray text */
       --font: 'Fira Code', monospace;
     }
-    
+
     * {
       margin: 0;
       padding: 0;
@@ -63,22 +63,40 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     }
 
+    .card-link {
+      background: var(--card-bg);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.2s ease;
+    }
+
+    .card-link:hover {
+      transform: scale(1.015);
+      background: #1f2630;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-link h3 {
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .card-link p {
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-link span {
+      font-size: 0.85rem;
+      color: var(--accent);
+    }
+
     h2 {
       color: var(--accent);
       margin-bottom: 0.75rem;
-    }
-
-    p, li {
-      font-size: 1rem;
-    }
-
-    ul {
-      list-style-type: none;
-      padding-left: 0;
-    }
-
-    li {
-      margin-bottom: 0.5rem;
     }
 
     a {
@@ -107,24 +125,31 @@
 
   <section>
     <div class="card">
-      <h2>👨‍🔬 About Me</h2>
+      <h2> About Me</h2>
       <p>
-        I am a researcher in quantitative genetics, passionate about AI and simulation tools for plant breeding.
+        I am a researcher in quantitative genetics, passionate about coding and simulation tools for plant breeding.
         I build scalable solutions blending genetics, code, and creativity.
       </p>
     </div>
 
     <div class="card">
-      <h2>💼 Projects</h2>
-      <ul>
-        <li><strong>ShinyBreedX:</strong> <a href="#">Meta-analysis for breeders</a></li>
-        <li><strong>XBreed:</strong> <a href="#">GWAS & Genomic Selection Web App</a></li>
-        <li><strong>GemIntel:</strong> <a href="#">CIA-style intelligence dashboard</a></li>
-      </ul>
+      <h2> Projects</h2>
+
+      <div class="card-link" onclick="window.open('https://github.com/JemaySALOMON/TMBusers', '_blank')">
+        <h3>TMBUsers</h3>
+        <p>Useful functions to work with <strong>Template Model Builder (TMB)</strong> – R package.</p>
+        <span>🔗 https://github.com/JemaySALOMON/TMBusers</span>
+      </div>
+
+      <div class="card-link" onclick="window.open('https://github.com/JemaySALOMON/b4plm.jl', '_blank')">
+        <h3>b4plm.jl</h3>
+        <p><strong>Breeding For Plant Mixtures (B4PLM)</strong>: A simple framework for simulating breeding strategies for plant mixtures using Julia. Currently under development.</p>
+        <span>🔗 https://github.com/JemaySALOMON/b4plm.jl</span>
+      </div>
     </div>
 
     <div class="card">
-      <h2>📫 Contact</h2>
+      <h2>Contact</h2>
       <p>
         Let's connect on
         <a href="https://github.com/yourusername" target="_blank">GitHub</a>,
