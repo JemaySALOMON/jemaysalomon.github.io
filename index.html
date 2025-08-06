@@ -1,22 +1,26 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Beautiful Site</title>
+  <title>Jemay SALOMON | Scientist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #007acc;
-      --bg: #f4f4f4;
-      --text: #333;
-      --font: 'Segoe UI', sans-serif;
+      --primary: #61dafb;        /* Soft neon blue */
+      --accent: #8b5cf6;         /* Light violet */
+      --bg: #0e1117;             /* Very dark blue-gray */
+      --card-bg: #161b22;        /* Slightly lighter for cards */
+      --text: #c9d1d9;           /* Light gray text */
+      --font: 'Fira Code', monospace;
     }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: var(--font);
       background-color: var(--bg);
@@ -24,68 +28,108 @@
       line-height: 1.6;
       padding: 2rem;
     }
+
     header {
       text-align: center;
       margin-bottom: 2rem;
     }
+
     header h1 {
       font-size: 2.5rem;
       color: var(--primary);
     }
+
     header p {
       font-size: 1.2rem;
-      color: #555;
+      color: var(--accent);
     }
+
     section {
       max-width: 800px;
       margin: auto;
     }
+
     .card {
-      background: white;
+      background: var(--card-bg);
       padding: 1.5rem;
       margin-bottom: 1.5rem;
       border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
+    .card:hover {
+      transform: scale(1.01);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    p, li {
+      font-size: 1rem;
+    }
+
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
     a {
       color: var(--primary);
       text-decoration: none;
     }
+
     a:hover {
+      color: var(--accent);
       text-decoration: underline;
     }
+
     footer {
       text-align: center;
       margin-top: 3rem;
       font-size: 0.9rem;
-      color: #888;
+      color: #555;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Jemay SALOMON | Scientist </h1>
+    <h1>Jemay SALOMON | Scientist</h1>
+    <p>Quantitative Genetics & AI Innovation</p>
   </header>
 
   <section>
     <div class="card">
-      <h2>About Me</h2>
+      <h2>👨‍🔬 About Me</h2>
       <p>
-        Test Description.
+        I am a researcher in quantitative genetics, passionate about AI and simulation tools for plant breeding.
+        I build scalable solutions blending genetics, code, and creativity.
       </p>
     </div>
 
     <div class="card">
       <h2>💼 Projects</h2>
       <ul>
-        <li><strong>Project A:</strong> <a href="#">Description and link</a></li>
-        <li><strong>Project B:</strong> <a href="#">Description and link</a></li>
+        <li><strong>ShinyBreedX:</strong> <a href="#">Meta-analysis for breeders</a></li>
+        <li><strong>XBreed:</strong> <a href="#">GWAS & Genomic Selection Web App</a></li>
+        <li><strong>GemIntel:</strong> <a href="#">CIA-style intelligence dashboard</a></li>
       </ul>
     </div>
 
     <div class="card">
       <h2>📫 Contact</h2>
-      <p>Let's connect on <a href="https://github.com/yourusername" target="_blank">GitHub</a>, or send me an email at jemaysalomon@gmail.com.</p>
+      <p>
+        Let's connect on
+        <a href="https://github.com/yourusername" target="_blank">GitHub</a>,
+        or email me at <a href="mailto:jemaysalomon@gmail.com">jemaysalomon@gmail.com</a>.
+      </p>
     </div>
   </section>
 
