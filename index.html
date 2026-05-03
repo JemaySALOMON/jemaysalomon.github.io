@@ -1,165 +1,625 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jemay SALOMON | Scientist</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #61dafb;       
-      --accent: #8b5cf6;         
-      --bg: #0e1117;             
-      --card-bg: #161b22;      
-      --text: #c9d1d9;  
-      --font: 'Fira Code', monospace;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jemay SALOMON | Quantitative Genetics</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f7f8fa;
+  --surface-2: #eef0f4;
+  --border: rgba(0,0,0,0.09);
+  --border-hover: rgba(14,90,200,0.3);
+  --text: #1c1f26;
+  --text-muted: #4a5568;
+  --text-dim: #9aa5b4;
+  --primary: #0e5ac8;
+  --primary-dim: rgba(14,90,200,0.07);
+  --primary-light: #e8f0fd;
+  --accent: #6d28d9;
+  --accent-dim: rgba(109,40,217,0.07);
+  --gold: #92610a;
+  --gold-dim: rgba(146,97,10,0.08);
+  --serif: 'EB Garamond', Georgia, serif;
+  --mono: 'JetBrains Mono', monospace;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
-    body {
-      font-family: var(--font);
-      background-color: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      padding: 2rem;
-    }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.75;
+}
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+.layout {
+  display: grid;
+  grid-template-columns: 248px 1fr;
+  min-height: 100vh;
+}
 
-    header h1 {
-      font-size: 2.5rem;
-      color: var(--primary);
-    }
+aside {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  padding: 3rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  background: var(--surface);
+}
 
-    header p {
-      font-size: 1.2rem;
-      color: var(--accent);
-    }
+.avatar-ring {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  padding: 2px;
+  flex-shrink: 0;
+}
+.avatar-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--primary);
+  letter-spacing: -1px;
+}
 
-    section {
-      max-width: 800px;
-      margin: auto;
-    }
+.sidebar-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.2;
+}
+.sidebar-role {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--primary);
+  margin-top: 5px;
+  line-height: 1.5;
+}
 
-    .card {
-      background: var(--card-bg);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+nav { display: flex; flex-direction: column; gap: 2px; }
+nav a {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+nav a .nav-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+  transition: background 0.18s;
+}
+nav a:hover { color: var(--primary); background: var(--primary-dim); border-color: rgba(14,90,200,0.15); }
+nav a:hover .nav-dot { background: var(--primary); }
 
-    .card:hover {
-      transform: scale(1.01);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
-    }
+.sidebar-links {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.sidebar-link {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.18s;
+}
+.sidebar-link:hover { color: var(--primary); }
 
-    .card-link {
-      background: var(--card-bg);
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.2s ease;
-    }
+main { padding: 4rem 4rem 6rem; max-width: 820px; }
 
-    .card-link:hover {
-      transform: scale(1.015);
-      background: #1f2630;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    }
+.section { margin-bottom: 4.5rem; }
 
-    .card-link h3 {
-      margin-bottom: 0.5rem;
-      color: var(--primary);
-    }
+.section-label {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--primary);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.75rem;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .card-link p {
-      color: var(--text);
-      margin-bottom: 0.4rem;
-    }
+.hero-title {
+  font-size: 2.8rem;
+  font-weight: 500;
+  color: #111318;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.2rem;
+}
+.hero-title em { font-style: italic; color: var(--primary); }
+.hero-subtitle {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.06em;
+}
 
-    .card-link span {
-      font-size: 0.85rem;
-      color: var(--accent);
-    }
+.about-body {
+  font-size: 1.05rem;
+  color: var(--text);
+  max-width: 660px;
+  line-height: 1.85;
+  margin-bottom: 1.75rem;
+}
+.about-body p + p { margin-top: 1rem; }
 
-    h2 {
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
+.interest-inline { display: flex; flex-direction: column; gap: 10px; margin-top: 1.5rem; }
+.interest-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: border-color 0.18s, background 0.18s;
+}
+.interest-row:hover { border-color: rgba(14,90,200,0.2); background: var(--primary-light); }
+.interest-kw {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  color: var(--primary);
+  white-space: nowrap;
+  min-width: 190px;
+  font-weight: 500;
+}
+.interest-line { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
 
-    a {
-      color: var(--primary);
-      text-decoration: none;
-    }
+.tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 1.75rem; }
+.tag {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  border: 1px solid;
+}
+.tag-blue { background: var(--primary-light); color: var(--primary); border-color: rgba(14,90,200,0.2); }
+.tag-purple { background: var(--accent-dim); color: var(--accent); border-color: rgba(109,40,217,0.2); }
+.tag-gold { background: var(--gold-dim); color: var(--gold); border-color: rgba(146,97,10,0.2); }
 
-    a:hover {
-      color: var(--accent);
-      text-decoration: underline;
-    }
+.pub-list { display: flex; flex-direction: column; gap: 18px; }
+.pub-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  padding: 1.1rem 1.4rem;
+  transition: border-color 0.18s;
+}
+.pub-item:hover { border-color: rgba(14,90,200,0.3); border-left-color: var(--primary); }
+.pub-item.preprint { border-left-color: var(--accent); }
+.pub-item.preprint:hover { border-color: rgba(109,40,217,0.3); border-left-color: var(--accent); }
 
-    footer {
-      text-align: center;
-      margin-top: 3rem;
-      font-size: 0.9rem;
-      color: #555;
-    }
-  </style>
+.pub-badge {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 0.45rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.badge-published { background: var(--primary-light); color: var(--primary); }
+.badge-preprint { background: var(--accent-dim); color: var(--accent); }
+
+.pub-title { font-size: 0.97rem; font-weight: 500; color: #111318; margin-bottom: 0.25rem; line-height: 1.4; }
+.pub-authors { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 0.25rem; }
+.pub-authors strong { color: var(--text); }
+.pub-journal { font-size: 0.83rem; font-style: italic; color: var(--gold); margin-bottom: 0.45rem; }
+.pub-links { display: flex; gap: 12px; }
+.pub-link {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1px;
+  transition: color 0.18s, border-color 0.18s;
+}
+.pub-link:hover { color: var(--primary); border-color: var(--primary); }
+
+.software-grid { display: flex; flex-direction: column; gap: 14px; }
+.software-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.35rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: start;
+  text-decoration: none;
+  transition: border-color 0.18s, background 0.18s;
+}
+.software-card:hover { border-color: rgba(14,90,200,0.25); background: var(--primary-light); }
+.software-name {
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary);
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.software-lang {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  padding: 1px 7px;
+  border-radius: 4px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid rgba(109,40,217,0.18);
+}
+.software-desc { font-size: 0.86rem; color: var(--text-muted); line-height: 1.6; }
+.software-status { font-family: var(--mono); font-size: 0.58rem; color: var(--text-dim); white-space: nowrap; }
+.status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-right: 5px; }
+.dot-active { background: #16a34a; }
+.dot-wip { background: #d97706; }
+
+.edu-timeline { display: flex; flex-direction: column; }
+.edu-item {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  gap: 0 1.25rem;
+  position: relative;
+}
+.edu-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 9px; top: 26px; bottom: -8px;
+  width: 1px;
+  background: var(--border);
+}
+.edu-dot-wrap { padding-top: 5px; }
+.edu-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+}
+.edu-dot.phd { border-color: var(--accent); }
+.edu-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.4rem;
+  transition: border-color 0.18s;
+}
+.edu-body:hover { border-color: rgba(14,90,200,0.2); }
+.edu-degree { font-size: 0.97rem; font-weight: 500; color: #111318; margin-bottom: 0.15rem; }
+.edu-institution { font-family: var(--mono); font-size: 0.68rem; color: var(--primary); margin-bottom: 0.3rem; }
+.edu-institution.phd-color { color: var(--accent); }
+.edu-years { font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); margin-bottom: 0.55rem; }
+.placeholder-block { height: 12px; border-radius: 3px; background: var(--surface-2); margin-bottom: 6px; }
+.placeholder-block.short { width: 55%; }
+
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1.35rem;
+  text-decoration: none;
+  transition: border-color 0.18s, background 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.contact-card:hover { border-color: rgba(14,90,200,0.25); background: var(--primary-light); }
+.contact-icon {
+  width: 34px; height: 34px;
+  border-radius: 7px;
+  background: var(--primary-light);
+  border: 1px solid rgba(14,90,200,0.15);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.contact-label { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); display: block; margin-bottom: 2px; letter-spacing: 0.06em; }
+.contact-value { font-size: 0.86rem; color: var(--text); }
+
+footer {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 2rem 0 1rem;
+  border-top: 1px solid var(--border);
+  max-width: 820px;
+}
+
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  aside { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; padding: 1.25rem 1.5rem; gap: 1rem; }
+  nav { flex-direction: row; flex-wrap: wrap; }
+  .sidebar-links { display: none; }
+  main { padding: 2rem 1.5rem 4rem; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 2.2rem; }
+  .interest-kw { min-width: 140px; }
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Jemay SALOMON | Junior Scientist</h1>
-    <p>Quantitative & Statistical Genetics | Breeding Schemes Optimization</p>
-  </header>
 
-  <section> 
-    <div class="card">
-      <h2> About Me</h2>
-      <p>
-   Quantitative genetics researcher building powerful tools for plant breeding and data analysis.
-   I combine simulation, statistics, and code to transform complex breeding schemes into scalable, data-driven solutions.
-      </p>
-    </div>
+<div class="layout">
 
-    <div class="card">
-      <h2> Projects</h2>
-
-      <div class="card-link" onclick="window.open('https://github.com/JemaySALOMON/TMBusers', '_blank')">
-        <h3>TMBUsers</h3>
-        <p>Useful functions to work with <strong>Template Model Builder (TMB)</strong> – R package.</p>
-        <span>🔗 https://github.com/JemaySALOMON/TMBusers</span>
-      </div>
-
-      <div class="card-link" onclick="window.open('https://github.com/JemaySALOMON/b4plm.jl', '_blank')">
-        <h3>b4plm.jl</h3>
-        <p><strong>Breeding For Plant Mixtures (B4PLM)</strong>: A simple framework for simulating breeding strategies for plant mixtures using Julia. Currently under development.</p>
-        <span>🔗 https://github.com/JemaySALOMON/b4plm.jl</span>
+  <aside>
+    <div>
+      <div class="avatar-ring">
+        <div class="avatar-inner">JS</div>
       </div>
     </div>
-
-    <div class="card">
-      <h2>Contact</h2>
-      <p>
-        Let's connect on
-        <a href="https://github.com/JemaySALOMON" target="_blank">GitHub</a>,
-        or email me at <a href="mailto:jemaysalomon@gmail.com">jemaysalomon@gmail.com</a>.
-      </p>
+    <div>
+      <div class="sidebar-name">Jemay SALOMON</div>
+      <div class="sidebar-role">Quantitative Genetics<br>Plant Breeding</div>
     </div>
-  </section>
+    <nav>
+      <a href="#about"><span class="nav-dot"></span>About &amp; Research</a>
+      <a href="#publications"><span class="nav-dot"></span>Publications</a>
+      <a href="#software"><span class="nav-dot"></span>Software</a>
+      <a href="#education"><span class="nav-dot"></span>Education</a>
+      <a href="#contact"><span class="nav-dot"></span>Contact</a>
+    </nav>
+    <div class="sidebar-links">
+      <a href="https://github.com/JemaySALOMON" target="_blank" class="sidebar-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:jemaysalomon@gmail.com" class="sidebar-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        jemaysalomon@gmail.com
+      </a>
+    </div>
+  </aside>
 
-  <footer>
-    &copy; 2025 Jemay SALOMON. All rights reserved.
-  </footer>
+  <main>
+
+    <section class="section" id="about">
+      <div class="section-label">// 00 · about &amp; research</div>
+
+      <h1 class="hero-title">Jemay<br><em>SALOMON</em></h1>
+      <div class="hero-subtitle">JUNIOR SCIENTIST · QUANTITATIVE &amp; STATISTICAL GENETICS</div>
+
+      <div class="about-body">
+        <p>
+          I am a quantitative genetics researcher focused on developing statistical and computational tools
+          to dissect the genetic architecture of complex traits and to optimize plant breeding programs.
+          My work sits at the intersection of mixed model theory, stochastic simulation, and software engineering —
+          translating methodological advances into practical, scalable breeding strategies.
+        </p>
+        <p>
+          My research interests span genomic prediction and selection, variance component estimation
+          via TMB and INLA, simulation-based optimization of multi-stage breeding schemes,
+          and the quantitative genetics of plant mixture systems — including inter-genotype competition
+          and selection response in heterogeneous stands.
+        </p>
+      </div>
+
+      <div class="interest-inline">
+        <div class="interest-row">
+          <span class="interest-kw">Genomic Selection</span>
+          <span class="interest-line">GBLUP, Bayesian shrinkage and variable selection methods for complex traits in self- and cross-pollinated crops.</span>
+        </div>
+        <div class="interest-row">
+          <span class="interest-kw">Breeding Scheme Design</span>
+          <span class="interest-line">Simulation-based optimization of selection intensity, cross allocation, and resource deployment across breeding stages.</span>
+        </div>
+        <div class="interest-row">
+          <span class="interest-kw">Variance Components</span>
+          <span class="interest-line">Scalable REML and Bayesian inference for large multi-environment trial data, including G×E decomposition.</span>
+        </div>
+        <div class="interest-row">
+          <span class="interest-kw">Genetics of Plant Mixtures</span>
+          <span class="interest-line">Quantitative frameworks for trait covariation, competitive interactions, and selection in heterogeneous stands.</span>
+        </div>
+      </div>
+
+      <div class="tag-row">
+        <span class="tag tag-blue">Mixed Models</span>
+        <span class="tag tag-blue">Genomic Selection</span>
+        <span class="tag tag-blue">Breeding Simulation</span>
+        <span class="tag tag-purple">TMB · INLA</span>
+        <span class="tag tag-purple">R · Julia</span>
+        <span class="tag tag-gold">Plant Mixtures</span>
+        <span class="tag tag-gold">G×E Interaction</span>
+      </div>
+    </section>
+
+    <section class="section" id="publications">
+      <div class="section-label">// 01 · publications</div>
+      <div class="pub-list">
+
+        <div class="pub-item">
+          <span class="pub-badge badge-published">Journal Article</span>
+          <div class="pub-title">[Title placeholder — add your publication here]</div>
+          <div class="pub-authors"><strong>Salomon J.</strong>, Author B., Author C.</div>
+          <div class="pub-journal">Journal Name · Year · Vol(Issue):pages</div>
+          <div class="pub-links">
+            <a href="#" class="pub-link">DOI</a>
+            <a href="#" class="pub-link">PDF</a>
+          </div>
+        </div>
+
+        <div class="pub-item preprint">
+          <span class="pub-badge badge-preprint">Preprint</span>
+          <div class="pub-title">[Title placeholder — add your preprint here]</div>
+          <div class="pub-authors"><strong>Salomon J.</strong>, Author B.</div>
+          <div class="pub-journal">bioRxiv · Year · doi:10.1101/XXXXXXXX</div>
+          <div class="pub-links">
+            <a href="#" class="pub-link">bioRxiv</a>
+            <a href="#" class="pub-link">PDF</a>
+          </div>
+        </div>
+
+        <div class="pub-item">
+          <span class="pub-badge badge-published">Journal Article</span>
+          <div class="pub-title">[Title placeholder — add your publication here]</div>
+          <div class="pub-authors">Author A., <strong>Salomon J.</strong>, Author C., Author D.</div>
+          <div class="pub-journal">Journal Name · Year</div>
+          <div class="pub-links">
+            <a href="#" class="pub-link">DOI</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="software">
+      <div class="section-label">// 02 · software</div>
+      <div class="software-grid">
+
+        <a class="software-card" href="https://github.com/JemaySALOMON/TMBusers" target="_blank">
+          <div>
+            <div class="software-name">TMBusers <span class="software-lang">R</span></div>
+            <div class="software-desc">
+              Utility functions extending Template Model Builder (TMB) workflows — model diagnostics,
+              variance component extraction, and structured random effects helpers for complex mixed models
+              in plant breeding analyses.
+            </div>
+          </div>
+          <div class="software-status"><span class="status-dot dot-active"></span>active</div>
+        </a>
+
+        <a class="software-card" href="https://github.com/JemaySALOMON/b4plm.jl" target="_blank">
+          <div>
+            <div class="software-name">b4plm.jl <span class="software-lang">Julia</span></div>
+            <div class="software-desc">
+              <em>Breeding For Plant Mixtures</em> — a simulation framework in Julia for modeling and
+              optimizing breeding strategies in heterogeneous plant mixture systems. Supports flexible
+              mating designs, selection schemes, and trait covariation across genotypic mixtures.
+            </div>
+          </div>
+          <div class="software-status"><span class="status-dot dot-wip"></span>in development</div>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="section" id="education">
+      <div class="section-label">// 03 · education</div>
+      <div class="edu-timeline">
+
+        <div class="edu-item">
+          <div class="edu-dot-wrap"><div class="edu-dot phd"></div></div>
+          <div class="edu-body">
+            <div class="edu-degree">Ph.D. · [Field placeholder]</div>
+            <div class="edu-institution phd-color">[Institution] · [Department]</div>
+            <div class="edu-years">[Start] – [End / Present]</div>
+            <div class="placeholder-block"></div>
+            <div class="placeholder-block short"></div>
+            <span style="font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);">→ Thesis title, advisor, key topics</span>
+          </div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-dot-wrap"><div class="edu-dot"></div></div>
+          <div class="edu-body">
+            <div class="edu-degree">M.Sc. · [Field placeholder]</div>
+            <div class="edu-institution">[Institution] · [Department]</div>
+            <div class="edu-years">[Start] – [End]</div>
+            <div class="placeholder-block"></div>
+            <div class="placeholder-block short"></div>
+            <span style="font-family:var(--mono);font-size:0.72rem;color:var(--text-dim);">→ Thesis title, advisor, key topics</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="section-label">// 04 · contact</div>
+      <div class="contact-grid">
+
+        <a class="contact-card" href="mailto:jemaysalomon@gmail.com">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0e5ac8" stroke-width="1.5">
+              <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/>
+            </svg>
+          </div>
+          <div>
+            <span class="contact-label">EMAIL</span>
+            <span class="contact-value">jemaysalomon@gmail.com</span>
+          </div>
+        </a>
+
+        <a class="contact-card" href="https://github.com/JemaySALOMON" target="_blank">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="#0e5ac8"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </div>
+          <div>
+            <span class="contact-label">GITHUB</span>
+            <span class="contact-value">JemaySALOMON</span>
+          </div>
+        </a>
+
+        <a class="contact-card" href="#" style="opacity:0.45;pointer-events:none;">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0e5ac8" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+          </div>
+          <div>
+            <span class="contact-label">GOOGLE SCHOLAR</span>
+            <span class="contact-value" style="color:var(--text-dim);">[Add profile link]</span>
+          </div>
+        </a>
+
+        <a class="contact-card" href="#" style="opacity:0.45;pointer-events:none;">
+          <div class="contact-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0e5ac8" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 0v20M2 12h20"/></svg>
+          </div>
+          <div>
+            <span class="contact-label">ORCID</span>
+            <span class="contact-value" style="color:var(--text-dim);">[Add ORCID]</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <footer>&copy; 2025 Jemay SALOMON · All rights reserved.</footer>
+
+  </main>
+</div>
+
 </body>
 </html>
