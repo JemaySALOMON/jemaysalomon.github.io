@@ -125,6 +125,34 @@ nav button:hover .nav-dot { background: var(--primary); }
 nav button.active { color: var(--primary); background: var(--primary-dim); border-color: rgba(14,90,200,0.15); }
 nav button.active .nav-dot { background: var(--primary); }
 
+.hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  gap: 5px;
+  margin-left: auto;
+}
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
 .sidebar-links {
   display: none;
 }
@@ -431,86 +459,79 @@ footer {
   background: var(--bg);
 }
 
-
 @media (max-width: 860px) {
 
-  aside{
-    position:sticky;
-    top:0;
-    z-index:100;
-
-    background:rgba(255,255,255,0.96);
-    backdrop-filter:blur(10px);
-
-    flex-direction:column;
-    align-items:flex-start;
-
-    gap:1rem;
-    padding:1rem 1rem;
+  .hamburger {
+    display: flex;
   }
 
-  nav{
-    width:100%;
-
-    display:flex;
-    flex-wrap:nowrap;
-
-    overflow-x:auto;
-    scrollbar-width:none;
-
-    gap:8px;
-
-    margin-left:0;
+  aside {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1rem;
   }
 
-  nav::-webkit-scrollbar{
-    display:none;
+  nav {
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 0;
+    transition: max-height 0.3s ease;
   }
 
-  nav button{
-    flex:0 0 auto;
-    white-space:nowrap;
-    width:auto;
+  nav.open {
+    max-height: 500px;
   }
 
-  main{
-    padding:1.5rem 1.25rem 5rem;
+  nav button {
+    flex: 1;
+    width: 100%;
+    white-space: nowrap;
   }
 
-  /* MOBILE = STACK ALL PANES */
-  .pane{
-    display:block !important;
-    max-width:100%;
-    animation:none;
-    margin-bottom:3rem;
+  main {
+    padding: 1.5rem 1.25rem 5rem;
   }
 
-  .pane:not(:last-child){
-    padding-bottom:2rem;
-    border-bottom:1px solid var(--border);
+  .pane {
+    display: none !important;
+    max-width: 100%;
+    animation: fadeIn 0.3s ease-in;
   }
 
-  .hero-title{
-    font-size:2rem;
-    line-height:1.15;
+  .pane.active {
+    display: block !important;
   }
 
-  .about-body{
-    font-size:1rem;
-    text-align:left;
+  .hero-title {
+    font-size: 2rem;
+    line-height: 1.15;
   }
 
-  .software-entry{
-    flex-direction:column;
-    gap:12px;
+  .about-body {
+    font-size: 1rem;
+    text-align: left;
   }
 
-  .contact-grid{
-    grid-template-columns:1fr;
+  .software-entry {
+    flex-direction: column;
+    gap: 12px;
   }
 
-  footer{
-    position:relative;
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  footer {
+    position: relative;
   }
 
 }
@@ -531,8 +552,13 @@ footer {
       <div class="sidebar-name">Jemay Salomon</div>
       <div class="sidebar-role">Junior Research Scientist</div>
     </div>
+    <button class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <nav id="navMenu">
-      <button class="nav-btn active" data-pane="about"><span class="nav-dot"></span>Research Interest </button>
+      <button class="nav-btn active" data-pane="about"><span class="nav-dot"></span>Research Interest</button>
       <button class="nav-btn" data-pane="projects"><span class="nav-dot"></span>Projects</button>
       <button class="nav-btn" data-pane="publications"><span class="nav-dot"></span>Publications</button>
       <button class="nav-btn" data-pane="teaching"><span class="nav-dot"></span>Teaching</button>
@@ -564,8 +590,6 @@ footer {
         <div class="hero-subtitle">statistical & quantitative genetics . mixed models . breeding methods . AI for plant breeding</div>
       </div>
     </div>
-
-
 
     <div class="pane" id="pane-projects">
       <div class="section">
@@ -671,7 +695,6 @@ footer {
                 
                 <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Supervisors</div>
                 <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">Jérôme Enjalbert; Timothée Flutre</div>
-            
               </div>
             </div>
           </div>
@@ -760,60 +783,54 @@ footer {
   </main>
 </div>
 
-
 <script>
 
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
 const navButtons = document.querySelectorAll('.nav-btn');
 const panes = document.querySelectorAll('.pane');
+
+// Hamburger menu toggle
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navMenu.classList.toggle('open');
+});
+
+// Close menu when nav item is clicked (mobile)
+navButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    if(window.innerWidth <= 860) {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('open');
+    }
+    const paneId = button.getAttribute('data-pane');
+    activatePane(paneId);
+  });
+});
 
 function isMobile(){
   return window.innerWidth <= 860;
 }
 
 function activatePane(paneId){
-  
-  if(isMobile()){
-    document
-      .getElementById(`pane-${paneId}`)
-      .scrollIntoView({
-        behavior:'smooth',
-        block:'start'
-      });
-
-    return;
-  }
-
   navButtons.forEach(btn => btn.classList.remove('active'));
   panes.forEach(pane => pane.classList.remove('active'));
 
-  document
-    .querySelector(`[data-pane="${paneId}"]`)
-    .classList.add('active');
+  document.querySelector(`[data-pane="${paneId}"]`).classList.add('active');
+  document.getElementById(`pane-${paneId}`).classList.add('active');
 
-  document
-    .getElementById(`pane-${paneId}`)
-    .classList.add('active');
+  if(isMobile()){
+    document.getElementById(`pane-${paneId}`).scrollIntoView({
+      behavior:'smooth',
+      block:'start'
+    });
+  }
 }
 
-navButtons.forEach(button => {
-
-  button.addEventListener('click', () => {
-    const paneId = button.getAttribute('data-pane');
-    activatePane(paneId);
-
-  });
-
-});
-
 function initLayout(){
-  if(isMobile()){
-    panes.forEach(pane => pane.classList.add('active'));
-  } else {
-    panes.forEach(pane => pane.classList.remove('active'));
-    document
-      .querySelector('.nav-btn.active')
-      .click();
-  }
+  // Always show only active pane
+  panes.forEach(pane => pane.classList.remove('active'));
+  document.querySelector('.nav-btn.active').click();
 }
 
 initLayout();
