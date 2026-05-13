@@ -44,7 +44,9 @@ body {
 }
 
 aside {
-  position: static;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   height: auto;
   display: flex;
   flex-direction: row;
@@ -466,13 +468,15 @@ footer {
   }
 
   aside {
-    position: static;
+    position: sticky;
+    top: 0;
     z-index: 100;
     background: var(--surface);
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
     padding: 1rem 1rem;
+    border-bottom: 1px solid var(--border);
   }
 
   nav {
