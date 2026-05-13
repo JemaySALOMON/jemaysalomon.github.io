@@ -799,12 +799,17 @@ hamburger.addEventListener('click', () => {
 // Close menu when nav item is clicked (mobile)
 navButtons.forEach(button => {
   button.addEventListener('click', () => {
+    const paneId = button.getAttribute('data-pane');
+    activatePane(paneId);
+    
     if(window.innerWidth <= 860) {
       hamburger.classList.remove('active');
       navMenu.classList.remove('open');
+      // Scroll to top after closing menu
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 50);
     }
-    const paneId = button.getAttribute('data-pane');
-    activatePane(paneId);
   });
 });
 
