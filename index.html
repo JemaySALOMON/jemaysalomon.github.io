@@ -38,22 +38,24 @@ body {
 }
 
 .layout {
-  display: grid;
-  grid-template-columns: 248px 1fr;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
 }
 
 aside {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  border-right: 1px solid var(--border);
-  padding: 3rem 1.75rem;
+  position: static;
+  height: auto;
   display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem 2rem;
   background: var(--surface);
+  border-right: none;
+  border-bottom: 1px solid var(--border);
+  overflow-y: visible;
+  flex-wrap: wrap;
 }
 
 .avatar-ring {
@@ -93,35 +95,38 @@ aside {
   line-height: 1.5;
 }
 
-nav { display: flex; flex-direction: column; gap: 2px; }
-nav a {
+nav { display: flex; flex-direction: row; gap: 2px; margin-left: auto; }
+nav button {
   font-family: var(--mono);
   font-size: 0.7rem;
   color: var(--text-muted);
-  text-decoration: none;
-  padding: 6px 10px;
-  border-radius: 6px;
+  background: transparent;
   border: 1px solid transparent;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
   transition: all 0.18s;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 6px;
+  text-align: left;
+  width: auto;
+  white-space: nowrap;
 }
-nav a .nav-dot {
+nav button .nav-dot {
   width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--text-dim);
   flex-shrink: 0;
   transition: background 0.18s;
 }
-nav a:hover { color: var(--primary); background: var(--primary-dim); border-color: rgba(14,90,200,0.15); }
-nav a:hover .nav-dot { background: var(--primary); }
+nav button:hover { color: var(--primary); background: var(--primary-dim); border-color: rgba(14,90,200,0.15); }
+nav button:hover .nav-dot { background: var(--primary); }
+nav button.active { color: var(--primary); background: var(--primary-dim); border-color: rgba(14,90,200,0.15); }
+nav button.active .nav-dot { background: var(--primary); }
 
 .sidebar-links {
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: none;
 }
 .sidebar-link {
   font-family: var(--mono);
@@ -135,7 +140,28 @@ nav a:hover .nav-dot { background: var(--primary); }
 }
 .sidebar-link:hover { color: var(--primary); }
 
-main { padding: 4rem 4rem 6rem; max-width: 820px; }
+main {
+  padding: 3rem 4rem 80px 4rem;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pane {
+  display: none;
+  animation: fadeIn 0.3s ease-in;
+  width: 100%;
+  max-width: 820px;
+}
+.pane.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 .section { margin-bottom: 4.5rem; }
 
@@ -179,27 +205,26 @@ main { padding: 4rem 4rem 6rem; max-width: 820px; }
 }
 .about-body p + p { margin-top: 1rem; }
 
-.interest-inline { display: flex; flex-direction: column; gap: 10px; margin-top: 1.5rem; }
+.interest-inline { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
 .interest-row {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(14,90,200,0.2);
+  background: var(--primary-light);
   transition: border-color 0.18s, background 0.18s;
 }
-.interest-row:hover { border-color: rgba(14,90,200,0.2); background: var(--primary-light); }
+.interest-row:hover { border-color: rgba(14,90,200,0.4); background: var(--primary-light); }
 .interest-kw {
   font-family: var(--mono);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   color: var(--primary);
   white-space: nowrap;
-  min-width: 190px;
   font-weight: 500;
 }
-.interest-line { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+.interest-line { display: none; }
 
 .tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 1.75rem; }
 .tag {
@@ -239,6 +264,7 @@ main { padding: 4rem 4rem 6rem; max-width: 820px; }
 }
 .badge-published { background: var(--primary-light); color: var(--primary); }
 .badge-preprint { background: var(--accent-dim); color: var(--accent); }
+.badge-teaching { background: var(--gold-dim); color: var(--gold); }
 
 .pub-title { font-size: 0.97rem; font-weight: 500; color: #111318; margin-bottom: 0.25rem; line-height: 1.4; }
 .pub-authors { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 0.25rem; }
@@ -295,7 +321,6 @@ main { padding: 4rem 4rem 6rem; max-width: 820px; }
 .dot-active { background: #16a34a; }
 .dot-wip { background: #d97706; }
 
-
 .software-entry{
   display:flex;
   justify-content:space-between;
@@ -325,13 +350,6 @@ main { padding: 4rem 4rem 6rem; max-width: 820px; }
   width:100%;
   height:1px;
   background:var(--border);
-}
-
-.section-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
 }
 
 .edu-timeline { display: flex; flex-direction: column; }
@@ -403,17 +421,30 @@ footer {
   font-size: 0.62rem;
   color: var(--text-dim);
   text-align: center;
-  padding: 2rem 0 1rem;
+  padding: 1rem 2rem;
   border-top: 1px solid var(--border);
-  max-width: 820px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg);
 }
 
 @media (max-width: 860px) {
-  .layout { grid-template-columns: 1fr; }
-  aside { position: static; height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; padding: 1.25rem 1.5rem; gap: 1rem; }
-  nav { flex-direction: row; flex-wrap: wrap; }
+  aside { 
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  nav { 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    margin-left: 0;
+  }
+  nav button { width: auto; }
   .sidebar-links { display: none; }
-  main { padding: 2rem 1.5rem 4rem; }
+  main { padding: 2rem 1.5rem; }
   .contact-grid { grid-template-columns: 1fr; }
   .hero-title { font-size: 2.2rem; }
   .interest-kw { min-width: 140px; }
@@ -434,13 +465,13 @@ footer {
       <div class="sidebar-name">Jemay Salomon</div>
       <div class="sidebar-role">Junior Research Scientist</div>
     </div>
-    <nav>
-      <a href="#about"><span class="nav-dot"></span>About</a>
-      <a href="#publications"><span class="nav-dot"></span>Publications</a>
-      <a href="#teaching"><span class="nav-dot"></span>Teaching</a>
-      <a href="#software"><span class="nav-dot"></span>Software</a>
-      <a href="#education"><span class="nav-dot"></span>Education</a>
-      <a href="#contact"><span class="nav-dot"></span>Contact</a>
+    <nav id="navMenu">
+      <button class="nav-btn active" data-pane="about"><span class="nav-dot"></span>About</button>
+      <button class="nav-btn" data-pane="publications"><span class="nav-dot"></span>Publications</button>
+      <button class="nav-btn" data-pane="teaching"><span class="nav-dot"></span>Teaching</button>
+      <button class="nav-btn" data-pane="software"><span class="nav-dot"></span>Software</button>
+      <button class="nav-btn" data-pane="education"><span class="nav-dot"></span>Education</button>
+      <button class="nav-btn" data-pane="connect"><span class="nav-dot"></span>Connect</button>
     </nav>
     <div class="sidebar-links">
       <a href="https://github.com/JemaySALOMON" target="_blank" class="sidebar-link">
@@ -456,232 +487,261 @@ footer {
 
   <main>
 
-    <section class="section" id="about">
-      <div class="section-label">About</div>
+    <div class="pane active" id="pane-about">
+      <div class="section">
+        <div class="section-label">About</div>
 
-      <div class="about-body">
-        <p>
-          I am a Junior quantitative geneticist researcher focused on developing statistical and computational tools
-          to dissect the genetic architecture of complex traits and to optimize plant breeding programs.
-          My work sits at the intersection of mixed model theory, stochastic simulation, and tools development —
-          translating methodological advances into practical, scalable breeding strategies.
-        </p>
-        <p>
-          My research interests span genetic effects and (co)variance component estimation, genomic selection,
-          simulation-based optimization of multi-stage breeding schemes, the quantitative genetics of 
-          complex traits and using AI to accelerate the breeding of superior cultivars.
-        </p>
+        <div class="about-body">
+          <p>
+            I am a Junior quantitative geneticist researcher focused on developing statistical and computational tools
+            to dissect the genetic architecture of complex traits and to optimize plant breeding programs.
+            My work sits at the intersection of mixed model theory, stochastic simulation, and tools development —
+            translating methodological advances into practical, scalable breeding strategies.
+          </p>
+          <p>
+            My research interests span genetic effects and (co)variance component estimation, genomic selection,
+            simulation-based optimization of multi-stage breeding schemes, the quantitative genetics of 
+            complex traits and using AI to accelerate the breeding of superior cultivars.
+          </p>
+        </div>
+        <div class="hero-subtitle">statistical & quantitative genetics . mixed models . breeding methods . AI for plant breeding</div>
       </div>
-      <div class="hero-subtitle">Interest: statistical genetics . quantitative genetics . mixed models . breeding methods . AI for plant breeding</div>
-    </section>
+    </div>
 
-    <section class="section" id="publications">
-      <div class="section-label">Publications</div>
-      <div class="pub-list">
-        <div class="pub-item preprint">
-          <span class="pub-badge badge-preprint">Preprint</span>
-          <div class="pub-title">Joint modeling of social genetic effects in mono- and pluri-specific groups: Case study in intercrops</div>
-          <div class="pub-authors"><strong>Salomon, J.</strong>, Enjalbert, J., & Flutre, T. (2026).</div>
-          <div class="pub-journal"><em>bioRxiv</em>. https://doi.org/10.64898/2026.03.27.714849</div>
-          <div class="pub-links">
-            <a href="https://doi.org/10.64898/2026.03.27.714849" class="pub-link" target="_blank" rel="noopener noreferrer">bioRxiv</a>
+    <div class="pane" id="pane-publications">
+      <div class="section">
+        <div class="section-label">Publications</div>
+        <div class="pub-list">
+          <div class="pub-item preprint">
+            <span class="pub-badge badge-preprint">Preprint</span>
+            <div class="pub-title">Joint modeling of social genetic effects in mono- and pluri-specific groups: Case study in intercrops</div>
+            <div class="pub-authors"><strong>Salomon, J.</strong>, Enjalbert, J., & Flutre, T. (2026).</div>
+            <div class="pub-journal"><em>bioRxiv</em>. https://doi.org/10.64898/2026.03.27.714849</div>
+            <div class="pub-links">
+              <a href="https://doi.org/10.64898/2026.03.27.714849" class="pub-link" target="_blank" rel="noopener noreferrer">bioRxiv</a>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-     <section class="section" id="teaching">
-      <div class="section-label">Teaching</div>
-      <div class="pub-list">
-        <div class="pub-item">
-          <span class="pub-badge badge-teaching">Course</span>
-          <div class="pub-title">Interim Lecturer – Introduction to Quantitative Genetics (Master's level)</div>
-          <div class="pub-authors">Université Quisqueya . November 2025</div>
-          <div class="pub-links">
-            <a href="https://github.com/JemaySALOMON/UniQG-2026" class="pub-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <div class="pane" id="pane-teaching">
+      <div class="section">
+        <div class="section-label">Teaching</div>
+        <div class="pub-list">
+          <div class="pub-item">
+            <span class="pub-badge badge-teaching">Course</span>
+            <div class="pub-title">Interim Lecturer – Introduction to Quantitative Genetics (Master's level)</div>
+            <div class="pub-authors">Université Quisqueya . November 2025</div>
+            <div class="pub-links">
+              <a href="https://github.com/JemaySALOMON/UniQG-2026" class="pub-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="section" id="software">
-      <div class="section-label">Software</div>
+    <div class="pane" id="pane-software">
+      <div class="section">
+        <div class="section-label">Software</div>
 
-      <div class="software-card">
+        <div class="software-card">
 
-        <a class="software-entry" href="https://github.com/JemaySALOMON/TMBusers" target="_blank">
-          <div>
-            <div class="software-name">
-              TMBusers <span class="software-lang">R</span>
+          <a class="software-entry" href="https://github.com/JemaySALOMON/TMBusers" target="_blank">
+            <div>
+              <div class="software-name">
+                TMBusers <span class="software-lang">R</span>
+              </div>
+
+              <div class="software-desc">
+                <em>TMBusers</em> — A set of utility functions extending Template Model Builder (TMB) workflows — model diagnostics,
+                fixed effects, (co)variances component and BLUP extraction for complex mixed models.
+              </div>
             </div>
 
-            <div class="software-desc">
-              <em>TMBusers</em> — A set of utility functions extending Template Model Builder (TMB) workflows — model diagnostics,
-              fixed effects, (co)variances component and BLUP extraction for complex mixed models.
+            <div class="software-status">
+              <span class="status-dot dot-active"></span>active
             </div>
-          </div>
+          </a>
 
-          <div class="software-status">
-            <span class="status-dot dot-active"></span>active
-          </div>
-        </a>
+          <div class="software-separator"></div>
 
-        <div class="software-separator"></div>
+          <a class="software-entry" href="https://github.com/JemaySALOMON/simPLM" target="_blank">
+            <div>
+              <div class="software-name">
+                simPLM <span class="software-lang">C/C++</span>
+              </div>
 
-        <a class="software-entry" href="https://github.com/JemaySALOMON/simPLM" target="_blank">
-          <div>
-            <div class="software-name">
-              simPLM <span class="software-lang">C/C++</span>
+              <div class="software-desc">
+                <em>simPLM</em> — A simulation framework in C/C++ for modeling and
+                optimizing breeding strategies for interspecific plant mixture systems.
+              </div>
             </div>
 
-            <div class="software-desc">
-              <em>simPLM</em> — A simulation framework in C/C++ for modeling and
-              optimizing breeding strategies for interspecific plant mixture systems.
+            <div class="software-status">
+              <span class="status-dot dot-wip"></span>in development
             </div>
-          </div>
+          </a>
 
-          <div class="software-status">
-            <span class="status-dot dot-wip"></span>in development
-          </div>
-        </a>
-
+        </div>
       </div>
-    </section>
+    </div>
 
-    <section class="section" id="education">
-      <div class="section-label">Education</div>
-      <div class="edu-timeline">
+    <div class="pane" id="pane-education">
+      <div class="section">
+        <div class="section-label">Education</div>
+        <div class="edu-timeline">
 
-        <div class="edu-item">
-          <div class="edu-dot-wrap"><div class="edu-dot phd"></div></div>
-          <div class="edu-body">
-            <div class="edu-degree">Ph.D.– Quantitative Genetics and Plant Breeding</div>
-            <div class="edu-institution phd-color">Université Paris-Saclay · INRAE · France</div>
-            <div class="edu-years">2026</div>
-            
-            <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
-              <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Thesis</div>
-              <div style="font-size: 0.92rem; color: var(--text); line-height: 1.6; margin-bottom: 1rem;">Genetic basis of interspecific mixing ability: identification of genomic regions and genetic trade-offs for breeding</div>
+          <div class="edu-item">
+            <div class="edu-dot-wrap"><div class="edu-dot phd"></div></div>
+            <div class="edu-body">
+              <div class="edu-degree">Ph.D.– Quantitative Genetics and Plant Breeding</div>
+              <div class="edu-institution phd-color">Université Paris-Saclay · INRAE · France</div>
+              <div class="edu-years">2026</div>
               
-              <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Supervisors</div>
-              <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">Jérôme Enjalbert; Timothée Flutre</div>
-              
-              <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Keywords</div>
-              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                <span class="tag tag-purple">plant-plant interactions</span>
-                <span class="tag tag-purple">indirect genetic effects</span>
-                <span class="tag tag-purple">mixing ability</span>
-                <span class="tag tag-purple">phenotypic plasticity</span>
-                <span class="tag tag-purple">incomplete design</span>
-                <span class="tag tag-purple">agroecological mixtures</span>
-                <span class="tag tag-purple">automatic differentiation</span>
-                <span class="tag tag-purple">GWAS on correlated traits</span>
+              <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
+                <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Thesis</div>
+                <div style="font-size: 0.92rem; color: var(--text); line-height: 1.6; margin-bottom: 1rem;">Genetic basis of interspecific mixing ability: identification of genomic regions and genetic trade-offs for breeding</div>
+                
+                <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Supervisors</div>
+                <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">Jérôme Enjalbert; Timothée Flutre</div>
+                
+                <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Keywords</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                  <span class="tag tag-purple">plant-plant interactions</span>
+                  <span class="tag tag-purple">indirect genetic effects</span>
+                  <span class="tag tag-purple">mixing ability</span>
+                  <span class="tag tag-purple">phenotypic plasticity</span>
+                  <span class="tag tag-purple">incomplete design</span>
+                  <span class="tag tag-purple">agroecological mixtures</span>
+                  <span class="tag tag-purple">automatic differentiation</span>
+                  <span class="tag tag-purple">GWAS on correlated traits</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="edu-item">
-          <div class="edu-dot-wrap"><div class="edu-dot"></div></div>
-          <div class="edu-body">
-            <div class="edu-degree">M.Sc. – Quantitative Genetics and Plant Breeding</div>
-            <div class="edu-institution">Institut Agro Montpellier · France</div>
-            <div class="edu-years">2023</div>
-            
-            <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
-              <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Thesis</div>
-              <div style="font-size: 0.92rem; color: var(--text); line-height: 1.6; margin-bottom: 1rem;">Optimization of genomic prediction models for sorghum (Sorghum bicolor) performance in new environments: stability analysis and influential physiological factors, inter- and intra-environmental prediction, integration of the GxE component, and phenomic approach</div>
-              <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Supervisors</div>
-              <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">Gaël H. Pressoir </div>
+          <div class="edu-item">
+            <div class="edu-dot-wrap"><div class="edu-dot"></div></div>
+            <div class="edu-body">
+              <div class="edu-degree">M.Sc. – Quantitative Genetics and Plant Breeding</div>
+              <div class="edu-institution">Institut Agro Montpellier · France</div>
+              <div class="edu-years">2023</div>
               
-              <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Keywords</div>
-              <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem;">
-                <span class="tag tag-blue">Sorghum bicolor</span>
-                <span class="tag tag-blue">genomic prediction</span>
-                <span class="tag tag-blue">phenomic prediction</span>
-                <span class="tag tag-blue">stability</span>
-                <span class="tag tag-blue">cross-environment prediction</span>
-                <span class="tag tag-blue">GxE interaction</span>
+              <div style="margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border);">
+                <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Thesis</div>
+                <div style="font-size: 0.92rem; color: var(--text); line-height: 1.6; margin-bottom: 1rem;">Optimization of genomic prediction models for sorghum (Sorghum bicolor) performance in new environments: stability analysis and influential physiological factors, inter- and intra-environmental prediction, integration of the GxE component, and phenomic approach</div>
+                <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Supervisors</div>
+                <div style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1rem;">Gaël H. Pressoir </div>
+                
+                <div style="font-family: var(--mono); font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.5rem;">Keywords</div>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem;">
+                  <span class="tag tag-blue">Sorghum bicolor</span>
+                  <span class="tag tag-blue">genomic prediction</span>
+                  <span class="tag tag-blue">phenomic prediction</span>
+                  <span class="tag tag-blue">stability</span>
+                  <span class="tag tag-blue">cross-environment prediction</span>
+                  <span class="tag tag-blue">GxE interaction</span>
+                </div>
+                <div class="pub-links" style="margin-top: 0.8rem;">
+                   <a href="https://dumas.ccsd.cnrs.fr/dumas-04554294v1/document" class="pub-link" target="_blank" rel="noopener noreferrer">PDF</a>
+               </div>
               </div>
-              <div class="pub-links" style="margin-top: 0.8rem;">
-                 <a href="https://dumas.ccsd.cnrs.fr/dumas-04554294v1/document" class="pub-link" target="_blank" rel="noopener noreferrer">PDF</a>
-             </div>
             </div>
           </div>
+
         </div>
-
       </div>
-    </section>
+    </div>
 
-    <section class="section" id="contact">
-      <div class="section-label">Contact</div>
-      <div class="contact-grid">
+    <div class="pane" id="pane-connect">
+      <div class="section">
+        <div class="section-label">Connect</div>
+        <div class="contact-grid">
 
-        <a class="contact-card" href="mailto:jemaysalomon@gmail.com">
-          <div class="contact-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0e5ac8" stroke-width="1.5">
-              <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/>
-            </svg>
-          </div>
-          <div>
-            <span class="contact-label">EMAIL</span>
-            <span class="contact-value">jemaysalomon@gmail.com</span>
-          </div>
-        </a>
+          <a class="contact-card" href="mailto:jemaysalomon@gmail.com">
+            <div class="contact-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0e5ac8" stroke-width="1.5">
+                <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/>
+              </svg>
+            </div>
+            <div>
+              <span class="contact-label">EMAIL</span>
+              <span class="contact-value">jemaysalomon@gmail.com</span>
+            </div>
+          </a>
 
-        <a class="contact-card" href="https://github.com/JemaySALOMON" target="_blank">
-          <div class="contact-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#0e5ac8"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          </div>
-          <div>
-            <span class="contact-label">GITHUB</span>
-            <span class="contact-value">JemaySALOMON</span>
-          </div>
-        </a>
+          <a class="contact-card" href="https://github.com/JemaySALOMON" target="_blank">
+            <div class="contact-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0e5ac8"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            </div>
+            <div>
+              <span class="contact-label">GITHUB</span>
+              <span class="contact-value">JemaySALOMON</span>
+            </div>
+          </a>
 
-        <a class="contact-card" href="https://scholar.google.com/citations?user=SRTXVUAAAAAJ&hl=fr" target="_blank">
-          <div class="contact-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#0e5ac8">
-              <path d="M12 24a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm0-16L0 9l12-9 12 9-12-1z"/>
-            </svg>
-          </div>
-          <div>
-            <span class="contact-label">GOOGLE SCHOLAR</span>
-            <span class="contact-value">View profile</span>
-          </div>
-        </a>
+          <a class="contact-card" href="https://scholar.google.com/citations?user=SRTXVUAAAAAJ&hl=fr" target="_blank">
+            <div class="contact-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0e5ac8">
+                <path d="M12 24a7 7 0 1 0 0-14 7 7 0 0 0 0 14zm0-16L0 9l12-9 12 9-12-1z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="contact-label">GOOGLE SCHOLAR</span>
+              <span class="contact-value">View profile</span>
+            </div>
+          </a>
 
-        <a class="contact-card" href="https://orcid.org/0000-0003-4454-7916" target="_blank">
-          <div class="contact-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#A6CE39">
-              <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm-3 5.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM7.5 10h3v8h-3v-8zm5 0h4.2c4 0 5.3 2.7 5.3 5s-1.3 5-5.3 5h-4.2v-10zm3 2.3v5.4h1c2.3 0 3.3-1.1 3.3-2.7s-1-2.7-3.3-2.7h-1z"/>
-            </svg>
-          </div>
-          <div>
-            <span class="contact-label">ORCID</span>
-            <span class="contact-value">View profile</span>
-          </div>
-        </a>
+          <a class="contact-card" href="https://orcid.org/0000-0003-4454-7916" target="_blank">
+            <div class="contact-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#A6CE39">
+                <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm-3 5.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM7.5 10h3v8h-3v-8zm5 0h4.2c4 0 5.3 2.7 5.3 5s-1.3 5-5.3 5h-4.2v-10zm3 2.3v5.4h1c2.3 0 3.3-1.1 3.3-2.7s-1-2.7-3.3-2.7h-1z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="contact-label">ORCID</span>
+              <span class="contact-value">View profile</span>
+            </div>
+          </a>
 
-        <a class="contact-card" href="https://www.linkedin.com/in/jemay-salomon/" target="_blank">
-          <div class="contact-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#0e5ac8">
-              <path d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8h4V24h-4V8zm7 0h3.8v2.2h.1c.53-1 1.84-2.2 3.8-2.2 4.07 0 4.82 2.68 4.82 6.16V24h-4v-6.98c0-1.67-.03-3.82-2.33-3.82-2.33 0-2.69 1.82-2.69 3.7V24h-4V8z"/>
-            </svg>
-          </div>
-          <div>
-            <span class="contact-label">LINKEDIN</span>
-            <span class="contact-value">View profile</span>
-          </div>
-        </a>
+          <a class="contact-card" href="https://www.linkedin.com/in/jemay-salomon/" target="_blank">
+            <div class="contact-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0e5ac8">
+                <path d="M4.98 3.5A2.48 2.48 0 1 1 0 3.5a2.48 2.48 0 0 1 4.98 0zM.5 8h4V24h-4V8zm7 0h3.8v2.2h.1c.53-1 1.84-2.2 3.8-2.2 4.07 0 4.82 2.68 4.82 6.16V24h-4v-6.98c0-1.67-.03-3.82-2.33-3.82-2.33 0-2.69 1.82-2.69 3.7V24h-4V8z"/>
+              </svg>
+            </div>
+            <div>
+              <span class="contact-label">LINKEDIN</span>
+              <span class="contact-value">View profile</span>
+            </div>
+          </a>
 
+        </div>
       </div>
-    </section>
+    </div>
 
     <footer>&copy; 2025 Jemay SALOMON · All rights reserved.</footer>
 
   </main>
 </div>
+
+<script>
+const navButtons = document.querySelectorAll('.nav-btn');
+const panes = document.querySelectorAll('.pane');
+
+navButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const paneId = button.getAttribute('data-pane');
+    
+    navButtons.forEach(btn => btn.classList.remove('active'));
+    panes.forEach(pane => pane.classList.remove('active'));
+    
+    button.classList.add('active');
+    document.getElementById(`pane-${paneId}`).classList.add('active');
+  });
+});
+</script>
 
 </body>
 </html>
