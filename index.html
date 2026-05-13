@@ -694,21 +694,65 @@ footer {
   </main>
 </div>
 
+
 <script>
+
 const navButtons = document.querySelectorAll('.nav-btn');
 const panes = document.querySelectorAll('.pane');
 
+function isMobile(){
+  return window.innerWidth <= 860;
+}
+
+function activatePane(paneId){
+  
+  if(isMobile()){
+    document
+      .getElementById(`pane-${paneId}`)
+      .scrollIntoView({
+        behavior:'smooth',
+        block:'start'
+      });
+
+    return;
+  }
+
+  navButtons.forEach(btn => btn.classList.remove('active'));
+  panes.forEach(pane => pane.classList.remove('active'));
+
+  document
+    .querySelector(`[data-pane="${paneId}"]`)
+    .classList.add('active');
+
+  document
+    .getElementById(`pane-${paneId}`)
+    .classList.add('active');
+}
+
 navButtons.forEach(button => {
+
   button.addEventListener('click', () => {
     const paneId = button.getAttribute('data-pane');
-    
-    navButtons.forEach(btn => btn.classList.remove('active'));
-    panes.forEach(pane => pane.classList.remove('active'));
-    
-    button.classList.add('active');
-    document.getElementById(`pane-${paneId}`).classList.add('active');
+    activatePane(paneId);
+
   });
+
 });
+
+function initLayout(){
+  if(isMobile()){
+    panes.forEach(pane => pane.classList.add('active'));
+  } else {
+    panes.forEach(pane => pane.classList.remove('active'));
+    document
+      .querySelector('.nav-btn.active')
+      .click();
+  }
+}
+
+initLayout();
+window.addEventListener('resize', initLayout);
+
 </script>
 
 </body>
