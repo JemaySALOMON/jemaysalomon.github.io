@@ -807,10 +807,8 @@ navButtons.forEach(button => {
     if(window.innerWidth <= 860) {
       hamburger.classList.remove('active');
       navMenu.classList.remove('open');
-      // Scroll to top after closing menu
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 50);
+      // Scroll to top when menu item is clicked
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   });
 });
@@ -825,13 +823,6 @@ function activatePane(paneId){
 
   document.querySelector(`[data-pane="${paneId}"]`).classList.add('active');
   document.getElementById(`pane-${paneId}`).classList.add('active');
-
-  if(isMobile()){
-    document.getElementById(`pane-${paneId}`).scrollIntoView({
-      behavior:'smooth',
-      block:'start'
-    });
-  }
 }
 
 function initLayout(){
